@@ -52,4 +52,46 @@ public class BST<K extends Comparable<K>, V> {
             return true;
         }
     }
+
+    public void delete(K key) {
+        root = delete(root, key);
+    }
+
+    private Node delete(Node node, K key) {
+        if (node == null) {
+            return null; // Key not found
+        }
+
+        int cmp = key.compareTo(node.key);
+
+        if (cmp < 0) {
+            node.left = delete(node.left, key);
+        } else if (cmp > 0) {
+            node.right = delete(node.right, key);
+        } else {
+            // Node with the key to be deleted found
+
+            // Case 1: Node with no children or one child
+            if (node.left == null) {
+                return node.right;
+            } else if (node.right == null) {
+                return node.left;
+            }
+
+            // Case 2: Node with two children
+            Node successor = findMin(node.right); // Find the in-order successor
+            node.key = successor.key;
+            node.val = successor.val;
+            node.right = delete(node.right, successor.key); // Delete the in-order successor
+        }
+
+        return node;
+    }
+
+    private Node findMin(Node node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
 }

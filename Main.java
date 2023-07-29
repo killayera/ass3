@@ -7,6 +7,7 @@ public class Main {
         bst.insert(6, "Value3");
         bst.insert(9, "Value4");
         bst.insert(7, "Value5");
-        System.out.println(bst.contains(10));
+        bst.delete(5);
+        System.out.println(bst.contains(9));
     }
 }
